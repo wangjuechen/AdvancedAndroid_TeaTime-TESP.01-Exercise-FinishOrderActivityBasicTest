@@ -16,14 +16,18 @@
 
 package com.example.android.teatime;
 
-import android.app.Activity;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
 
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.junit.runners.JUnit4;
+
+import static android.support.test.espresso.Espresso.onView;
+import static android.support.test.espresso.action.ViewActions.click;
+import static android.support.test.espresso.assertion.ViewAssertions.matches;
+import static android.support.test.espresso.matcher.ViewMatchers.withId;
+import static android.support.test.espresso.matcher.ViewMatchers.withText;
 
 /**
  * This test demos a user clicking the decrement button and verifying that it properly decrease
@@ -34,18 +38,23 @@ import org.junit.runners.JUnit4;
 @RunWith(AndroidJUnit4.class)
 public class OrderActivityBasicTest {
 
+    @Rule
+    public ActivityTestRule<OrderActivity> activityActivityTestRule = new ActivityTestRule<OrderActivity>(OrderActivity.class);
     // TODO (2) Add the rule that provides functional testing of a single activity
-    @Rule public ActivityTestRule<OrderActivity> orderActivityActivityTestRule =
-            new ActivityTestRule<>(OrderActivity.class);
-
-
 
     // TODO (3) Finish writing this test which will:
     //          - Check that the initial quantity is zero
     //          - Click on the decrement button
     //          - Verify that the decrement button won't decrease the quantity 0 and cost below $0.00
+
     @Test
-    public void clickDecrementButton_ChangesQuantityAndCost() {
-        
+    public  void clickDecrementMethod_orderButton() {
+        onView(withId(R.id.quantity_text_view)).check(matches(withText("0")));
+        onView(withId(R.id.decrement_button)).perform(click());
+        onView(withId(R.id.quantity_text_view)).check(matches(withText("0")));
+        onView(withId(R.id.cost_text_view)).check(matches(withText("$0.00")));
+
     }
+
+
 }
